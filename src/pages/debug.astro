@@ -1,0 +1,58 @@
+---
+/**
+ * Debug Page - Five Laws Button Diagnostic
+ * 
+ * This page tests the fundamental client-side functionality to diagnose
+ * why ALL buttons are not working across the application.
+ */
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ButtonTest from '../components/debug/ButtonTest.astro';
+import SimpleTest from '../components/debug/SimpleTest.astro';
+---
+
+<BaseLayout 
+  title="Five Laws Button Diagnostic"
+  description="Systematic diagnosis of client-side button functionality issues"
+>
+  <main class="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+    <div class="container mx-auto px-4">
+      <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold text-gray-900 dark:text-white mb-4">
+          Five Laws Button Diagnostic
+        </h1>
+        <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+          Systematic diagnosis following the Five Laws of Cognitive Governance to identify
+          why buttons are not functioning across the application.
+        </p>
+      </div>
+      
+      <SimpleTest />
+      
+      <ButtonTest />
+      
+      <div class="mt-8 text-center">
+        <div class="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-2xl mx-auto">
+          <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+            Diagnostic Protocol
+          </h2>
+          <div class="text-left text-sm text-gray-600 dark:text-gray-400 space-y-2">
+            <p><strong>Law 1 (Architectural Intelligence):</strong> Test coordination between SSR and client hydration</p>
+            <p><strong>Law 2 (Cognitive Governance):</strong> Systematic protocol: Test → Isolate → Fix → Validate</p>
+            <p><strong>Law 3 (Truth Foundation):</strong> Establish absolute truth about JavaScript execution</p>
+            <p><strong>Law 4 (Energy Stewardship):</strong> Minimal test to efficiently identify root cause</p>
+            <p><strong>Law 5 (Deterministic Reliability):</strong> Consistent test for reliable diagnosis</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</BaseLayout>
+
+<style>
+  /* Ensure proper styling for the debug page */
+  .container {
+    max-width: 1200px;
+  }
+</style>
+

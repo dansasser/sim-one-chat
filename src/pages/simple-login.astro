@@ -1,0 +1,26 @@
+---
+/**
+ * Simple Login Test Page
+ * 
+ * Tests the simple, working login component with mobile responsiveness.
+ */
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SimpleLogin from '../components/auth/SimpleLogin.astro';
+---
+
+<BaseLayout 
+  title="Simple Login Test"
+  description="Testing the simple, working login component with mobile responsiveness"
+>
+  <SimpleLogin />
+</BaseLayout>
+
+<style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+</style>
+

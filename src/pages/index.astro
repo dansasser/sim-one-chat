@@ -1,0 +1,134 @@
+---
+/**
+ * Home Page - SIM-ONE Chat Interface Entry Point
+ * 
+ * Redirects authenticated users to chat interface, shows welcome for guests.
+ */
+
+import AppLayout from '../layouts/AppLayout.astro';
+
+// Check authentication status
+const isAuthenticated = Astro.url.searchParams.get('auth') === 'success';
+
+// Redirect authenticated users to chat
+if (isAuthenticated) {
+  return Astro.redirect('/chat?auth=success');
+}
+---
+
+<AppLayout title="SIM-ONE Chat Interface" description="Revolutionary AI Framework Chat Interface">
+  <div class="chat-container h-full flex flex-col">
+    <!-- Welcome Message -->
+    <div class="welcome-section flex-1 flex items-center justify-center p-8">
+      <div class="text-center max-w-2xl">
+        <div class="mb-8">
+          <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-teal-600 rounded-2xl flex items-center justify-center mx-auto mb-4">
+            <span class="text-white font-bold text-2xl">S1</span>
+          </div>
+          <h1 class="text-4xl font-bold text-gray-900 dark:text-white mb-4">
+            Welcome to SIM-ONE
+          </h1>
+          <p class="text-lg text-gray-600 dark:text-gray-300 mb-8">
+            Experience the future of AI with our revolutionary five-agent cognitive governance framework.
+          </p>
+        </div>
+        
+        <!-- Feature Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          <div class="feature-card p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
+            <div class="w-12 h-12 bg-blue-100 dark:bg-blue-900/20 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+              Cognitive Separation
+            </h3>
+            <p class="text-sm text-gray-600 dark:text-gray-300">
+              Specialized agents handle different cognitive tasks for optimal performance.
+            </p>
+          </div>
+          
+          <div class="feature-card p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
+            <div class="w-12 h-12 bg-green-100 dark:bg-green-900/20 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+              Verification Imperative
+            </h3>
+            <p class="text-sm text-gray-600 dark:text-gray-300">
+              All outputs undergo systematic verification and quality control.
+            </p>
+          </div>
+          
+          <div class="feature-card p-6 bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm">
+            <div class="w-12 h-12 bg-purple-100 dark:bg-purple-900/20 rounded-lg flex items-center justify-center mb-4">
+              <svg class="w-6 h-6 text-purple-600 dark:text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+              </svg>
+            </div>
+            <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">
+              Protocolic Governance
+            </h3>
+            <p class="text-sm text-gray-600 dark:text-gray-300">
+              Explicit protocols ensure deterministic and controllable behavior.
+            </p>
+          </div>
+        </div>
+        
+        <!-- Start Chat Button -->
+        <a href="/chat" class="start-chat-btn inline-block px-8 py-3 bg-gradient-to-r from-green-500 to-teal-600 text-white font-semibold rounded-lg hover:from-green-600 hover:to-teal-700 transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+          Start New Chat
+        </a>
+      </div>
+    </div>
+  </div>
+</AppLayout>
+
+<style>
+  .chat-container {
+    background-color: var(--color-bg-chat);
+  }
+  
+  .feature-card {
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  }
+  
+  .feature-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+  }
+  
+  .start-chat-btn {
+    transition: all var(--transition-normal);
+  }
+  
+  .start-chat-btn:focus {
+    outline: 2px solid var(--color-accent-primary);
+    outline-offset: 2px;
+  }
+  
+  /* High contrast mode adjustments */
+  [data-theme="high-contrast"] .feature-card {
+    border-width: 2px;
+  }
+  
+  [data-theme="high-contrast"] .start-chat-btn:focus {
+    outline-width: 3px;
+  }
+</style>
+
+<script>
+  // Start chat button handler
+  document.addEventListener('DOMContentLoaded', () => {
+    const startChatBtn = document.querySelector('.start-chat-btn');
+    startChatBtn?.addEventListener('click', () => {
+      // Navigate to chat page or trigger new chat
+      window.location.href = '/chat';
+    });
+  });
+</script>
+

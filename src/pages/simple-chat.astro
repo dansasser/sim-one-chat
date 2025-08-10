@@ -1,0 +1,27 @@
+---
+/**
+ * Simple Chat Test Page
+ * 
+ * Tests the simple, working chat interface pattern.
+ */
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SimpleChatInterface from '../components/chat/SimpleChatInterface.astro';
+---
+
+<BaseLayout 
+  title="Simple Chat Test"
+  description="Testing the simple, working chat interface pattern"
+>
+  <SimpleChatInterface />
+</BaseLayout>
+
+<style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+  }
+</style>
+

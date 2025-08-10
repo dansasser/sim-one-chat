@@ -1,0 +1,49 @@
+---
+/**
+ * Simple Test Component - Minimal client-side test
+ * 
+ * This is the most basic possible test to see if ANY client-side JavaScript works.
+ */
+---
+
+<div class="simple-test p-4 bg-yellow-100 border border-yellow-400 rounded">
+  <h3 class="font-bold text-yellow-800 mb-2">Simple Client-Side Test</h3>
+  <button id="simple-button" class="px-4 py-2 bg-yellow-500 text-white rounded">
+    Simple Test Button
+  </button>
+  <p id="simple-result" class="mt-2 text-yellow-700">No JavaScript executed yet</p>
+</div>
+
+<script>
+  // This script should run immediately when the page loads
+  console.log('🟡 Simple script loaded (no client directive)');
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log('🟡 DOM loaded event fired');
+    
+    const button = document.getElementById('simple-button');
+    const result = document.getElementById('simple-result');
+    
+    if (button && result) {
+      result.textContent = '✅ JavaScript is working!';
+      
+      button.addEventListener('click', function() {
+        result.textContent = '🎉 Button click works!';
+        console.log('🟡 Simple button clicked');
+      });
+    }
+  });
+</script>
+
+<script client:load>
+  // This script should run with client:load directive
+  console.log('🔵 Client:load script executed');
+  
+  setTimeout(() => {
+    const result = document.getElementById('simple-result');
+    if (result) {
+      result.textContent += ' + Client:load works!';
+    }
+  }, 100);
+</script>
+

@@ -1,0 +1,55 @@
+{
+  "name": "@agentui/frontend-sdk",
+  "version": "1.0.0",
+  "description": "Frontend SDK for AgentUI - Framework-agnostic UI components with backend API integration",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "jest",
+    "lint": "eslint src/**/*.ts"
+  },
+  "keywords": [
+    "agentui",
+    "frontend-sdk",
+    "ui-components",
+    "typescript",
+    "sdk",
+    "react",
+    "vue",
+    "astro",
+    "framework-agnostic",
+    "api-integration"
+  ],
+  "author": "Daniel T. Sasser II",
+  "license": "MIT",
+  "dependencies": {
+    "@agentui/protocol": "file:../protocol",
+    "axios": "^1.6.0",
+    "eventemitter3": "^5.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.8.0",
+    "typescript": "^5.2.0",
+    "jest": "^29.7.0",
+    "@types/jest": "^29.5.0",
+    "eslint": "^8.50.0",
+    "@typescript-eslint/eslint-plugin": "^6.7.0",
+    "@typescript-eslint/parser": "^6.7.0"
+  },
+  "files": [
+    "dist/**/*",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dansasser/agentui-monorepo.git",
+    "directory": "packages/frontend-sdk"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}
+

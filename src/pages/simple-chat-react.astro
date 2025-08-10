@@ -1,0 +1,42 @@
+---
+/**
+ * Simple Chat with React - Uses CORRECT Astro Architecture
+ * 
+ * This page uses the React ChatInterface component with proper Astro Islands architecture.
+ * The React component makes API calls to server-side endpoints, which is the correct pattern.
+ */
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ChatInterface from '../components/chat/ChatInterface.tsx';
+
+// Check authentication status (simplified for demo)
+const isAuthenticated = true; // For testing
+const userId = 'demo-user-id';
+const sessionId = 'demo-session-id';
+---
+
+<BaseLayout 
+  title="SIM-ONE Chat - React Architecture"
+  description="Experience the SIM-ONE Framework with proper Astro Islands architecture"
+>
+  <!-- Full-height container for the React chat interface -->
+  <div class="h-screen w-full">
+    <ChatInterface 
+      client:load
+      isAuthenticated={isAuthenticated}
+      userId={userId}
+      sessionId={sessionId}
+    />
+  </div>
+
+  <!-- Ensure full height styling -->
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+  </style>
+</BaseLayout>
+

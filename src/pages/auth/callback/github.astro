@@ -1,0 +1,110 @@
+---
+/**
+ * GitHub OAuth2 Callback Handler
+ * 
+ * Handles the OAuth2 callback from GitHub and completes the authentication process.
+ */
+
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import { authClient } from '../../../lib/auth-service';
+
+// Get query parameters from the URL
+const url = new URL(Astro.request.url);
+const code = url.searchParams.get('code');
+const state = url.searchParams.get('state');
+const error = url.searchParams.get('error');
+
+let authResult = null;
+let errorMessage = null;
+
+if (error) {
+  errorMessage = `OAuth2 error: ${error}`;
+} else if (!code || !state) {
+  errorMessage = 'Missing authorization code or state parameter';
+} else {
+  try {
+    // Handle OAuth2 callback
+    authResult = await authClient.handleOAuth2Callback('github', code, state);
+    
+    if (authResult.success && authResult.sessionId) {
+      // Store session information
+      // In a real app, you'd set secure cookies here
+      console.log('GitHub OAuth2 authentication successful:', authResult);
+      
+      // Redirect to dashboard or home page
+      return Astro.redirect('/?auth=success');
+    } else {
+      errorMessage = authResult.error || 'Authentication failed';
+    }
+  } catch (err) {
+    errorMessage = err instanceof Error ? err.message : 'Authentication error';
+  }
+}
+---
+
+<BaseLayout title="GitHub Authentication">
+  <div class="min-h-screen bg-gray-50 flex flex-col justify-center py-12 sm:px-6 lg:px-8">
+    <div class="sm:mx-auto sm:w-full sm:max-w-md">
+      <div class="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
+        {errorMessage ? (
+          <div class="text-center">
+            <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-red-100">
+              <svg class="h-6 w-6 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </div>
+            <div class="mt-3">
+              <h3 class="text-lg leading-6 font-medium text-gray-900">
+                Authentication Failed
+              </h3>
+              <div class="mt-2">
+                <p class="text-sm text-gray-500">
+                  {errorMessage}
+                </p>
+              </div>
+            </div>
+            <div class="mt-6">
+              <a
+                href="/login"
+                class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-gray-900 hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+              >
+                Try Again
+              </a>
+            </div>
+          </div>
+        ) : (
+          <div class="text-center">
+            <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-green-100">
+              <svg class="h-6 w-6 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+              </svg>
+            </div>
+            <div class="mt-3">
+              <h3 class="text-lg leading-6 font-medium text-gray-900">
+                Processing Authentication
+              </h3>
+              <div class="mt-2">
+                <p class="text-sm text-gray-500">
+                  Please wait while we complete your GitHub authentication...
+                </p>
+              </div>
+            </div>
+            <div class="mt-6">
+              <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900 mx-auto"></div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<script>
+  // Auto-redirect after successful authentication
+  if (window.location.search.includes('auth=success')) {
+    setTimeout(() => {
+      window.location.href = '/';
+    }, 2000);
+  }
+</script>
+

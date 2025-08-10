@@ -1,0 +1,244 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Sidebar from '../components/layout/Sidebar.astro';
+import Header from '../components/layout/Header.astro';
+
+export interface Props {
+  title: string;
+  description?: string;
+  showSidebar?: boolean;
+  showHeader?: boolean;
+  isAuthenticated?: boolean;
+  user?: {
+    name: string;
+    email: string;
+    plan: string;
+  };
+}
+
+const { 
+  title, 
+  description, 
+  showSidebar = true, 
+  showHeader = true,
+  isAuthenticated = false,
+  user
+} = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <div class="app-layout h-full flex">
+    <!-- Sidebar -->
+    {showSidebar && (
+      <aside class="sidebar-container">
+        <Sidebar isAuthenticated={isAuthenticated} user={user} />
+      </aside>
+    )}
+    
+    <!-- Main Content Area -->
+    <main class="main-content flex-1 flex flex-col min-w-0">
+      <!-- Header -->
+      {showHeader && (
+        <div class="header-container">
+          <Header />
+        </div>
+      )}
+      
+      <!-- Content -->
+      <div class="content-container flex-1 flex flex-col min-h-0">
+        <slot />
+      </div>
+    </main>
+  </div>
+</BaseLayout>
+
+<style>
+  .app-layout {
+    background-color: var(--color-bg-primary);
+  }
+  
+  .sidebar-container {
+    width: 260px;
+    background-color: var(--color-bg-sidebar);
+    border-right: 1px solid var(--color-border-primary);
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .header-container {
+    background-color: var(--color-bg-primary);
+    border-bottom: 1px solid var(--color-border-primary);
+    flex-shrink: 0;
+    z-index: 10;
+  }
+  
+  .content-container {
+    background-color: var(--color-bg-chat);
+    overflow: hidden;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .sidebar-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      z-index: 50;
+      transform: translateX(-100%);
+      transition: transform var(--transition-normal);
+    }
+    
+    .sidebar-container.open {
+      transform: translateX(0);
+    }
+    
+    .main-content {
+      width: 100%;
+    }
+  }
+  
+  /* Mobile overlay */
+  @media (max-width: 768px) {
+    .sidebar-container::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity var(--transition-normal), visibility var(--transition-normal);
+      z-index: -1;
+    }
+    
+    .sidebar-container.open::before {
+      opacity: 1;
+      visibility: visible;
+    }
+  }
+  
+  /* High contrast theme adjustments */
+  [data-theme="high-contrast"] .sidebar-container {
+    border-right-width: 2px;
+    border-right-color: var(--color-text-primary);
+  }
+  
+  [data-theme="high-contrast"] .header-container {
+    border-bottom-width: 2px;
+    border-bottom-color: var(--color-text-primary);
+  }
+  
+  /* Focus management for accessibility */
+  .sidebar-container:focus-within,
+  .main-content:focus-within {
+    outline: none;
+  }
+  
+  /* Smooth transitions for theme changes */
+  .sidebar-container,
+  .header-container,
+  .content-container {
+    transition: 
+      background-color var(--transition-normal),
+      border-color var(--transition-normal);
+  }
+</style>
+
+<script>
+  // Mobile sidebar toggle functionality
+  class SidebarManager {
+    private sidebar: HTMLElement | null = null;
+    private toggleButton: HTMLElement | null = null;
+    private isOpen = false;
+    
+    constructor() {
+      this.init();
+    }
+    
+    private init() {
+      this.sidebar = document.querySelector('.sidebar-container');
+      this.setupEventListeners();
+    }
+    
+    private setupEventListeners() {
+      // Listen for toggle events from header button
+      document.addEventListener('sidebar:toggle', () => {
+        this.toggle();
+      });
+      
+      // Close sidebar when clicking outside on mobile
+      document.addEventListener('click', (e) => {
+        if (window.innerWidth <= 768 && this.isOpen) {
+          const target = e.target as HTMLElement;
+          if (!this.sidebar?.contains(target) && !target.closest('[data-sidebar-toggle]')) {
+            this.close();
+          }
+        }
+      });
+      
+      // Handle escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && this.isOpen) {
+          this.close();
+        }
+      });
+      
+      // Handle resize
+      window.addEventListener('resize', () => {
+        if (window.innerWidth > 768 && this.isOpen) {
+          this.close();
+        }
+      });
+    }
+    
+    public toggle() {
+      if (this.isOpen) {
+        this.close();
+      } else {
+        this.open();
+      }
+    }
+    
+    public open() {
+      if (this.sidebar) {
+        this.sidebar.classList.add('open');
+        this.isOpen = true;
+        document.body.style.overflow = 'hidden';
+        
+        // Focus management
+        const firstFocusable = this.sidebar.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+        if (firstFocusable) {
+          (firstFocusable as HTMLElement).focus();
+        }
+      }
+    }
+    
+    public close() {
+      if (this.sidebar) {
+        this.sidebar.classList.remove('open');
+        this.isOpen = false;
+        document.body.style.overflow = '';
+        
+        // Return focus to toggle button if it exists
+        const toggleButton = document.querySelector('[data-sidebar-toggle]');
+        if (toggleButton) {
+          (toggleButton as HTMLElement).focus();
+        }
+      }
+    }
+  }
+  
+  // Initialize sidebar manager when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      new SidebarManager();
+    });
+  } else {
+    new SidebarManager();
+  }
+</script>
+

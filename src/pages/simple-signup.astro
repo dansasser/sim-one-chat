@@ -1,0 +1,26 @@
+---
+/**
+ * Simple Signup Test Page
+ * 
+ * Tests the simple, working signup component with mobile responsiveness.
+ */
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import SimpleSignup from '../components/auth/SimpleSignup.astro';
+---
+
+<BaseLayout 
+  title="Simple Signup Test"
+  description="Testing the simple, working signup component with mobile responsiveness"
+>
+  <SimpleSignup />
+</BaseLayout>
+
+<style>
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+</style>
+

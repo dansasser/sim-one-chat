@@ -1,0 +1,42 @@
+---
+/**
+ * React Chat Page - SIM-ONE Chat Interface with React Integration
+ * 
+ * Properly integrates the React ChatInterface component with Astro.
+ * Handles authentication state and provides the interactive chat experience.
+ */
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import ChatInterface from '../components/chat/ChatInterface.tsx';
+
+// Check authentication status (simplified for demo)
+const isAuthenticated = Astro.url.searchParams.get('auth') === 'success';
+const userId = isAuthenticated ? 'demo-user-id' : undefined;
+const sessionId = isAuthenticated ? 'demo-session-id' : undefined;
+---
+
+<BaseLayout 
+  title="SIM-ONE Chat Interface"
+  description="Experience the future of AI with SIM-ONE's revolutionary cognitive governance framework"
+>
+  <!-- Full-height container for the React chat interface -->
+  <div class="h-screen w-full">
+    <ChatInterface 
+      client:load
+      isAuthenticated={isAuthenticated}
+      userId={userId}
+      sessionId={sessionId}
+    />
+  </div>
+
+  <!-- Ensure full height styling -->
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+  </style>
+</BaseLayout>
+

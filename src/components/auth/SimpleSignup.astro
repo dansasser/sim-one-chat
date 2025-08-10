@@ -1,0 +1,400 @@
+---
+/**
+ * Simple Signup Component - Working Pattern
+ * 
+ * Uses the proven simple pattern for reliable button functionality.
+ * Mobile-first responsive design with proper form validation.
+ */
+---
+
+<div class="simple-signup-container min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md w-full space-y-8">
+    <!-- Header -->
+    <div class="text-center">
+      <div class="mx-auto h-12 w-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+        <span class="text-white font-bold text-lg">S1</span>
+      </div>
+      <h2 class="mt-6 text-3xl font-extrabold text-gray-900 dark:text-white">
+        Join SIM-ONE
+      </h2>
+      <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+        Create your account and experience the future of AI
+      </p>
+    </div>
+
+    <!-- Signup Form -->
+    <form class="mt-8 space-y-6">
+      <div class="space-y-4">
+        <!-- Full Name Field -->
+        <div>
+          <label for="fullname" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Full Name
+          </label>
+          <input
+            id="fullname"
+            name="fullname"
+            type="text"
+            autocomplete="name"
+            required
+            class="appearance-none relative block w-full px-3 py-3 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-white dark:bg-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+            placeholder="Enter your full name"
+          />
+        </div>
+
+        <!-- Email Field -->
+        <div>
+          <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Email address
+          </label>
+          <input
+            id="email"
+            name="email"
+            type="email"
+            autocomplete="email"
+            required
+            class="appearance-none relative block w-full px-3 py-3 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-white dark:bg-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+            placeholder="Enter your email"
+          />
+        </div>
+
+        <!-- Password Field -->
+        <div>
+          <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Password
+          </label>
+          <input
+            id="password"
+            name="password"
+            type="password"
+            autocomplete="new-password"
+            required
+            class="appearance-none relative block w-full px-3 py-3 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-white dark:bg-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+            placeholder="Create a password"
+          />
+          <div class="mt-1 text-xs text-gray-500 dark:text-gray-400">
+            Must be at least 8 characters with letters and numbers
+          </div>
+        </div>
+
+        <!-- Confirm Password Field -->
+        <div>
+          <label for="confirm-password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Confirm Password
+          </label>
+          <input
+            id="confirm-password"
+            name="confirm-password"
+            type="password"
+            autocomplete="new-password"
+            required
+            class="appearance-none relative block w-full px-3 py-3 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-white dark:bg-gray-800 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm"
+            placeholder="Confirm your password"
+          />
+        </div>
+      </div>
+
+      <!-- Terms and Privacy -->
+      <div class="flex items-start">
+        <div class="flex items-center h-5">
+          <input
+            id="terms"
+            name="terms"
+            type="checkbox"
+            required
+            class="h-4 w-4 text-blue-600 focus:ring-blue-500 border-gray-300 dark:border-gray-600 rounded"
+          />
+        </div>
+        <div class="ml-3 text-sm">
+          <label for="terms" class="text-gray-700 dark:text-gray-300">
+            I agree to the 
+            <a href="/terms" class="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300">
+              Terms of Service
+            </a>
+            and 
+            <a href="/privacy" class="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300">
+              Privacy Policy
+            </a>
+          </label>
+        </div>
+      </div>
+
+      <!-- Submit Button -->
+      <div>
+        <button
+          type="submit"
+          id="signup-button"
+          class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition-colors duration-200"
+        >
+          <span id="signup-button-text">Create Account</span>
+          <div id="signup-spinner" class="hidden ml-2">
+            <svg class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+          </div>
+        </button>
+      </div>
+
+      <!-- Status Message -->
+      <div id="signup-status" class="hidden text-center text-sm">
+        <div id="signup-status-content" class="p-3 rounded-lg"></div>
+      </div>
+
+      <!-- Login Link -->
+      <div class="text-center">
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          Already have an account?
+          <a href="/simple-login" class="font-medium text-blue-600 hover:text-blue-500 dark:text-blue-400 dark:hover:text-blue-300">
+            Sign in
+          </a>
+        </p>
+      </div>
+    </form>
+  </div>
+</div>
+
+<script>
+  // Simple, working signup pattern (no client directive needed for basic functionality)
+  console.log('🟢 Simple Signup Interface loaded');
+  
+  document.addEventListener('DOMContentLoaded', function() {
+    console.log('🟢 Simple Signup DOM ready');
+    
+    const signupForm = document.querySelector('form');
+    const signupButton = document.getElementById('signup-button');
+    const signupButtonText = document.getElementById('signup-button-text');
+    const signupSpinner = document.getElementById('signup-spinner');
+    const signupStatus = document.getElementById('signup-status');
+    const signupStatusContent = document.getElementById('signup-status-content');
+    const fullnameInput = document.getElementById('fullname');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const confirmPasswordInput = document.getElementById('confirm-password');
+    const termsCheckbox = document.getElementById('terms');
+    
+    if (signupForm && signupButton && emailInput && passwordInput) {
+      console.log('🟢 All signup elements found');
+      
+      // Form submit handler
+      signupForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        handleSignup();
+      });
+      
+      // Button click handler (backup)
+      signupButton.addEventListener('click', function(e) {
+        if (e.target.type !== 'submit') {
+          e.preventDefault();
+          handleSignup();
+        }
+      });
+      
+      // Real-time password validation
+      passwordInput.addEventListener('input', function() {
+        validatePassword();
+      });
+      
+      confirmPasswordInput.addEventListener('input', function() {
+        validatePasswordMatch();
+      });
+      
+      function handleSignup() {
+        const fullname = fullnameInput.value.trim();
+        const email = emailInput.value.trim();
+        const password = passwordInput.value.trim();
+        const confirmPassword = confirmPasswordInput.value.trim();
+        const termsAccepted = termsCheckbox.checked;
+        
+        console.log('🟢 Signup attempt:', email);
+        
+        // Validation
+        if (!fullname || !email || !password || !confirmPassword) {
+          showStatus('Please fill in all fields', 'error');
+          return;
+        }
+        
+        if (!isValidEmail(email)) {
+          showStatus('Please enter a valid email address', 'error');
+          return;
+        }
+        
+        if (!isValidPassword(password)) {
+          showStatus('Password must be at least 8 characters with letters and numbers', 'error');
+          return;
+        }
+        
+        if (password !== confirmPassword) {
+          showStatus('Passwords do not match', 'error');
+          return;
+        }
+        
+        if (!termsAccepted) {
+          showStatus('Please accept the Terms of Service and Privacy Policy', 'error');
+          return;
+        }
+        
+        // Show loading state
+        setLoading(true);
+        showStatus('Creating your account...', 'info');
+        
+        // Simulate account creation (replace with actual SIM-ONE Framework registration)
+        setTimeout(() => {
+          // Mock successful signup
+          showStatus('Account created successfully! Redirecting to login...', 'success');
+          setTimeout(() => {
+            window.location.href = '/simple-login';
+          }, 2000);
+        }, 2000);
+      }
+      
+      function setLoading(loading) {
+        if (loading) {
+          signupButton.disabled = true;
+          signupButtonText.textContent = 'Creating Account...';
+          signupSpinner.classList.remove('hidden');
+        } else {
+          signupButton.disabled = false;
+          signupButtonText.textContent = 'Create Account';
+          signupSpinner.classList.add('hidden');
+        }
+      }
+      
+      function showStatus(message, type) {
+        const statusClasses = {
+          success: 'bg-green-50 text-green-800 border border-green-200',
+          error: 'bg-red-50 text-red-800 border border-red-200',
+          info: 'bg-blue-50 text-blue-800 border border-blue-200'
+        };
+        
+        signupStatusContent.textContent = message;
+        signupStatusContent.className = `p-3 rounded-lg ${statusClasses[type] || statusClasses.info}`;
+        signupStatus.classList.remove('hidden');
+        
+        if (type === 'error') {
+          setTimeout(() => {
+            signupStatus.classList.add('hidden');
+          }, 5000);
+        }
+      }
+      
+      function isValidEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+      }
+      
+      function isValidPassword(password) {
+        // At least 8 characters, contains letters and numbers
+        const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,}$/;
+        return passwordRegex.test(password);
+      }
+      
+      function validatePassword() {
+        const password = passwordInput.value;
+        if (password && !isValidPassword(password)) {
+          passwordInput.classList.add('border-red-500');
+          passwordInput.classList.remove('border-gray-300');
+        } else {
+          passwordInput.classList.remove('border-red-500');
+          passwordInput.classList.add('border-gray-300');
+        }
+      }
+      
+      function validatePasswordMatch() {
+        const password = passwordInput.value;
+        const confirmPassword = confirmPasswordInput.value;
+        if (confirmPassword && password !== confirmPassword) {
+          confirmPasswordInput.classList.add('border-red-500');
+          confirmPasswordInput.classList.remove('border-gray-300');
+        } else {
+          confirmPasswordInput.classList.remove('border-red-500');
+          confirmPasswordInput.classList.add('border-gray-300');
+        }
+      }
+      
+    } else {
+      console.error('❌ Signup elements not found');
+    }
+  });
+</script>
+
+<script client:load>
+  // Enhanced functionality with client:load
+  console.log('🔵 Simple Signup client:load script executed');
+  
+  // Add any enhanced client-side functionality here
+  setTimeout(() => {
+    console.log('🔵 Simple Signup enhanced features loaded');
+    
+    // Add password strength indicator
+    const passwordInput = document.getElementById('password');
+    if (passwordInput) {
+      passwordInput.addEventListener('input', function() {
+        // Could add password strength visualization here
+      });
+    }
+  }, 100);
+</script>
+
+<style>
+  /* Mobile-first responsive design */
+  .simple-signup-container {
+    min-height: 100vh;
+    min-height: 100dvh; /* Dynamic viewport height for mobile */
+  }
+  
+  /* Smooth transitions */
+  input, button {
+    transition: all 0.2s ease;
+  }
+  
+  /* Focus states for accessibility */
+  input:focus, button:focus {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+  }
+  
+  /* Mobile optimizations */
+  @media (max-width: 640px) {
+    .simple-signup-container {
+      padding: 1rem;
+    }
+  }
+  
+  /* Ensure 16px+ font-size on all inputs for mobile (prevents iOS zoom) */
+  input {
+    font-size: 16px;
+  }
+  
+  /* Desktop can use smaller font if needed */
+  @media (min-width: 641px) {
+    input {
+      font-size: 14px;
+    }
+  }
+  
+  /* High contrast mode */
+  @media (prefers-contrast: high) {
+    input, button {
+      border-width: 2px;
+    }
+  }
+  
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+  
+  /* Form validation styles */
+  .border-red-500 {
+    border-color: #ef4444 !important;
+  }
+  
+  .border-green-500 {
+    border-color: #10b981 !important;
+  }
+</style>
+

@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "commonjs",
+    "lib": ["ES2020"],
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "resolveJsonModule": true
+  },
+  "include": [
+    "src/index-clean.ts",
+    "src/services/auth-service-clean.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "src/index.ts",
+    "src/services/auth-service.ts",
+    "src/services/auth-service-helpers.ts",
+    "src/services/oauth2-provider.ts",
+    "src/controllers",
+    "src/middleware/security-middleware.ts",
+    "src/test"
+  ]
+}

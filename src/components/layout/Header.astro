@@ -1,0 +1,286 @@
+---
+// Header component for the main content area
+---
+
+<header class="header h-16 flex items-center justify-between px-4 lg:px-6">
+  <!-- Left Section -->
+  <div class="flex items-center space-x-4">
+    <!-- Mobile Sidebar Toggle -->
+    <button 
+      class="sidebar-toggle lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+      data-sidebar-toggle
+      aria-label="Toggle sidebar"
+    >
+      <svg class="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+    
+    <!-- Chat Title -->
+    <div class="chat-title-container">
+      <h1 class="text-lg font-semibold text-gray-900 dark:text-white truncate max-w-xs sm:max-w-md">
+        <span id="chat-title">New Chat</span>
+      </h1>
+    </div>
+  </div>
+  
+  <!-- Center Section - Model Selector -->
+  <div class="hidden sm:flex items-center space-x-2">
+    <div class="model-selector-container">
+      <button class="model-selector flex items-center space-x-2 px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
+        <div class="w-2 h-2 bg-green-500 rounded-full"></div>
+        <span class="text-sm font-medium text-gray-700 dark:text-gray-300">SIM-ONE v1.0</span>
+        <svg class="w-4 h-4 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+  
+  <!-- Right Section -->
+  <div class="flex items-center space-x-2">
+    <!-- Processing Status Indicator -->
+    <div class="processing-status hidden" id="processing-status">
+      <div class="flex items-center space-x-2 px-3 py-1 bg-blue-50 dark:bg-blue-900/20 rounded-full">
+        <div class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></div>
+        <span class="text-xs font-medium text-blue-700 dark:text-blue-300">Processing</span>
+      </div>
+    </div>
+    
+    <!-- Theme Toggle -->
+    <button 
+      class="theme-toggle p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+      aria-label="Toggle theme"
+      title="Toggle theme"
+    >
+      <svg class="w-5 h-5 text-gray-600 dark:text-gray-300 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+      </svg>
+      <svg class="w-5 h-5 text-gray-600 dark:text-gray-300 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+      </svg>
+    </button>
+    
+    <!-- Share Button -->
+    <button 
+      class="share-btn p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+      aria-label="Share chat"
+      title="Share chat"
+    >
+      <svg class="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.367 2.684 3 3 0 00-5.367-2.684z"></path>
+      </svg>
+    </button>
+    
+    <!-- More Options -->
+    <button 
+      class="more-options p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+      aria-label="More options"
+      title="More options"
+    >
+      <svg class="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v.01M12 12v.01M12 19v.01M12 6a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2zm0 7a1 1 0 110-2 1 1 0 010 2z"></path>
+      </svg>
+    </button>
+  </div>
+</header>
+
+<style>
+  .header {
+    background-color: var(--color-bg-primary);
+    border-bottom: 1px solid var(--color-border-primary);
+    transition: background-color var(--transition-normal), border-color var(--transition-normal);
+  }
+  
+  .sidebar-toggle,
+  .theme-toggle,
+  .share-btn,
+  .more-options {
+    transition: background-color var(--transition-fast);
+  }
+  
+  .sidebar-toggle:hover,
+  .theme-toggle:hover,
+  .share-btn:hover,
+  .more-options:hover {
+    background-color: var(--color-bg-hover);
+  }
+  
+  .sidebar-toggle:focus,
+  .theme-toggle:focus,
+  .share-btn:focus,
+  .more-options:focus {
+    outline: 2px solid var(--color-accent-primary);
+    outline-offset: 2px;
+  }
+  
+  .model-selector {
+    transition: background-color var(--transition-fast), border-color var(--transition-fast);
+    border-color: var(--color-border-primary);
+  }
+  
+  .model-selector:hover {
+    background-color: var(--color-bg-hover);
+    border-color: var(--color-border-secondary);
+  }
+  
+  .model-selector:focus {
+    outline: 2px solid var(--color-accent-primary);
+    outline-offset: 2px;
+    border-color: var(--color-accent-primary);
+  }
+  
+  .processing-status {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* High contrast mode adjustments */
+  [data-theme="high-contrast"] .header {
+    border-bottom-width: 2px;
+  }
+  
+  [data-theme="high-contrast"] .model-selector {
+    border-width: 2px;
+  }
+  
+  [data-theme="high-contrast"] .sidebar-toggle:focus,
+  [data-theme="high-contrast"] .theme-toggle:focus,
+  [data-theme="high-contrast"] .share-btn:focus,
+  [data-theme="high-contrast"] .more-options:focus,
+  [data-theme="high-contrast"] .model-selector:focus {
+    outline-width: 3px;
+  }
+  
+  /* Mobile responsive adjustments */
+  @media (max-width: 640px) {
+    .chat-title-container h1 {
+      font-size: 1rem;
+      max-width: 150px;
+    }
+  }
+</style>
+
+<script client:load>
+  // Header interaction handlers
+  class HeaderInteractions {
+    private currentTheme: string = 'light';
+    
+    constructor() {
+      this.init();
+    }
+    
+    private init() {
+      this.currentTheme = document.documentElement.getAttribute('data-theme') || 'light';
+      this.setupEventListeners();
+    }
+    
+    private setupEventListeners() {
+      // Sidebar toggle
+      const sidebarToggle = document.querySelector('.sidebar-toggle');
+      sidebarToggle?.addEventListener('click', () => {
+        document.dispatchEvent(new CustomEvent('sidebar:toggle'));
+      });
+      
+      // Theme toggle
+      const themeToggle = document.querySelector('.theme-toggle');
+      themeToggle?.addEventListener('click', () => {
+        this.toggleTheme();
+      });
+      
+      // Model selector
+      const modelSelector = document.querySelector('.model-selector');
+      modelSelector?.addEventListener('click', () => {
+        this.handleModelSelector();
+      });
+      
+      // Share button
+      const shareBtn = document.querySelector('.share-btn');
+      shareBtn?.addEventListener('click', () => {
+        this.handleShare();
+      });
+      
+      // More options
+      const moreOptions = document.querySelector('.more-options');
+      moreOptions?.addEventListener('click', () => {
+        this.handleMoreOptions();
+      });
+      
+      // Listen for processing status updates
+      document.addEventListener('chat:processing', (e: any) => {
+        this.updateProcessingStatus(e.detail.isProcessing);
+      });
+      
+      // Listen for chat title updates
+      document.addEventListener('chat:titleUpdate', (e: any) => {
+        this.updateChatTitle(e.detail.title);
+      });
+    }
+    
+    private toggleTheme() {
+      const newTheme = this.currentTheme === 'light' ? 'dark' : 'light';
+      this.currentTheme = newTheme;
+      
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      
+      // Dispatch theme change event
+      document.dispatchEvent(new CustomEvent('theme:change', {
+        detail: { theme: newTheme }
+      }));
+    }
+    
+    private handleModelSelector() {
+      // Dispatch model selector event
+      document.dispatchEvent(new CustomEvent('model:selector:open'));
+    }
+    
+    private handleShare() {
+      // Dispatch share event
+      document.dispatchEvent(new CustomEvent('chat:share'));
+    }
+    
+    private handleMoreOptions() {
+      // Dispatch more options event
+      document.dispatchEvent(new CustomEvent('chat:moreOptions'));
+    }
+    
+    private updateProcessingStatus(isProcessing: boolean) {
+      const statusElement = document.getElementById('processing-status');
+      if (statusElement) {
+        if (isProcessing) {
+          statusElement.classList.remove('hidden');
+        } else {
+          statusElement.classList.add('hidden');
+        }
+      }
+    }
+    
+    private updateChatTitle(title: string) {
+      const titleElement = document.getElementById('chat-title');
+      if (titleElement) {
+        titleElement.textContent = title;
+      }
+    }
+  }
+  
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      new HeaderInteractions();
+    });
+  } else {
+    new HeaderInteractions();
+  }
+</script>
+

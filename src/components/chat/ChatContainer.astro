@@ -1,0 +1,83 @@
+---
+/**
+ * ChatContainer - Main Chat Interface Component
+ * 
+ * Implements the core chat interface following Law 5 (Protocolic Governance).
+ * Provides a structured container for the SIM-ONE chat experience.
+ */
+
+export interface Props {
+  isAuthenticated?: boolean;
+  userId?: string;
+  sessionId?: string;
+}
+
+const { isAuthenticated = false, userId, sessionId } = Astro.props;
+---
+
+<div class="flex flex-col h-full bg-white dark:bg-gray-900">
+  <!-- Chat Header -->
+  <div class="flex items-center justify-between p-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+    <div class="flex items-center space-x-3">
+      <div class="w-8 h-8 bg-gradient-to-r from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+        <span class="text-white font-bold text-sm">S1</span>
+      </div>
+      <div>
+        <h1 class="text-lg font-semibold text-gray-900 dark:text-white">SIM-ONE Chat</h1>
+        <p class="text-sm text-gray-500 dark:text-gray-400">
+          {isAuthenticated ? 'Authenticated Session' : 'Guest Mode'}
+        </p>
+      </div>
+    </div>
+    
+    <div class="flex items-center space-x-2">
+      <!-- Chat Actions -->
+      <button 
+        type="button"
+        class="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+        title="New Chat"
+        id="new-chat-btn"
+      >
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+  
+  <!-- Chat Messages Area -->
+  <div class="flex-1 overflow-y-auto p-4">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center py-8">
+        <h2 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">Welcome to SIM-ONE</h2>
+        <p class="text-gray-600 dark:text-gray-400">Start a conversation with our revolutionary AI framework</p>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Chat Input Area -->
+  <div class="border-t border-gray-200 dark:border-gray-700 p-4">
+    <div class="max-w-4xl mx-auto">
+      <div class="flex items-end space-x-3">
+        <div class="flex-1">
+          <textarea
+            class="w-full resize-none rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 px-4 py-3 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+            placeholder="Message SIM-ONE..."
+            rows="1"
+            id="chat-input"
+          ></textarea>
+        </div>
+        <button
+          type="button"
+          class="rounded-lg bg-blue-600 px-4 py-3 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+          id="send-button"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+

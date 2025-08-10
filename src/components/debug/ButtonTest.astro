@@ -1,0 +1,207 @@
+---
+/**
+ * Button Test Component - Five Laws Diagnostic Tool
+ * 
+ * Law 1 (Architectural Intelligence): Tests the coordination between Astro SSR and client hydration
+ * Law 2 (Cognitive Governance): Provides systematic diagnostic protocol for button functionality
+ * Law 3 (Truth Foundation): Establishes absolute truth about JavaScript execution capability
+ * Law 4 (Energy Stewardship): Minimal component to efficiently identify root cause
+ * Law 5 (Deterministic Reliability): Consistent test that will reliably show the issue
+ */
+---
+
+<div class="button-test-container p-8 bg-gray-100 dark:bg-gray-800 rounded-lg">
+  <h2 class="text-xl font-bold mb-4 text-gray-900 dark:text-white">
+    Five Laws Button Diagnostic Test
+  </h2>
+  
+  <div class="space-y-4">
+    <!-- Test 1: Basic HTML Button (No JavaScript) -->
+    <div>
+      <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        Test 1: HTML Button (No JS)
+      </h3>
+      <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600">
+        HTML Only Button
+      </button>
+    </div>
+    
+    <!-- Test 2: Client-Side JavaScript Button -->
+    <div>
+      <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        Test 2: Client-Side JS Button
+      </h3>
+      <button 
+        id="js-test-button" 
+        class="px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
+      >
+        Click Me (JS Test)
+      </button>
+      <span id="js-test-result" class="ml-2 text-sm text-gray-600 dark:text-gray-400"></span>
+    </div>
+    
+    <!-- Test 3: Event Listener Test -->
+    <div>
+      <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        Test 3: Event Listener Test
+      </h3>
+      <button 
+        id="event-test-button" 
+        class="px-4 py-2 bg-purple-500 text-white rounded hover:bg-purple-600"
+      >
+        Event Test Button
+      </button>
+      <span id="event-test-result" class="ml-2 text-sm text-gray-600 dark:text-gray-400"></span>
+    </div>
+    
+    <!-- Test 4: Console Log Test -->
+    <div>
+      <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        Test 4: Console Output Test
+      </h3>
+      <button 
+        id="console-test-button" 
+        class="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
+      >
+        Console Test (Check DevTools)
+      </button>
+    </div>
+    
+    <!-- Diagnostic Results -->
+    <div class="mt-6 p-4 bg-white dark:bg-gray-700 rounded border">
+      <h3 class="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+        Diagnostic Results:
+      </h3>
+      <div id="diagnostic-results" class="text-sm text-gray-600 dark:text-gray-400">
+        Waiting for tests...
+      </div>
+    </div>
+  </div>
+</div>
+
+<script client:load>
+  // Five Laws Diagnostic Protocol
+  console.log('🔍 Five Laws Button Diagnostic - Script Loading...');
+  
+  class ButtonDiagnostic {
+    private results: string[] = [];
+    
+    constructor() {
+      console.log('🔍 ButtonDiagnostic class instantiated');
+      this.runDiagnostics();
+    }
+    
+    private runDiagnostics() {
+      // Test 1: Basic JavaScript execution
+      try {
+        console.log('✅ Test 1: JavaScript execution - PASSED');
+        this.results.push('✅ JavaScript execution: WORKING');
+      } catch (error) {
+        console.error('❌ Test 1: JavaScript execution - FAILED', error);
+        this.results.push('❌ JavaScript execution: FAILED');
+      }
+      
+      // Test 2: DOM access
+      try {
+        const testElement = document.getElementById('js-test-result');
+        if (testElement) {
+          testElement.textContent = '✅ DOM Access Working';
+          console.log('✅ Test 2: DOM access - PASSED');
+          this.results.push('✅ DOM access: WORKING');
+        } else {
+          throw new Error('Element not found');
+        }
+      } catch (error) {
+        console.error('❌ Test 2: DOM access - FAILED', error);
+        this.results.push('❌ DOM access: FAILED');
+      }
+      
+      // Test 3: Event listeners
+      try {
+        const jsButton = document.getElementById('js-test-button');
+        const eventButton = document.getElementById('event-test-button');
+        const consoleButton = document.getElementById('console-test-button');
+        
+        if (jsButton) {
+          jsButton.addEventListener('click', () => {
+            const result = document.getElementById('js-test-result');
+            if (result) {
+              result.textContent = '🎉 Button Click Working!';
+              result.className = 'ml-2 text-sm text-green-600 font-medium';
+            }
+            console.log('✅ JS Button clicked successfully');
+          });
+        }
+        
+        if (eventButton) {
+          eventButton.addEventListener('click', () => {
+            const result = document.getElementById('event-test-result');
+            if (result) {
+              result.textContent = '🎉 Event Listener Working!';
+              result.className = 'ml-2 text-sm text-green-600 font-medium';
+            }
+            console.log('✅ Event button clicked successfully');
+          });
+        }
+        
+        if (consoleButton) {
+          consoleButton.addEventListener('click', () => {
+            console.log('🎉 Console Test Button Clicked!');
+            console.log('📊 Diagnostic Results:', this.results);
+            alert('Console test executed! Check DevTools console.');
+          });
+        }
+        
+        console.log('✅ Test 3: Event listeners setup - PASSED');
+        this.results.push('✅ Event listeners: WORKING');
+      } catch (error) {
+        console.error('❌ Test 3: Event listeners - FAILED', error);
+        this.results.push('❌ Event listeners: FAILED');
+      }
+      
+      // Update diagnostic results
+      this.updateResults();
+    }
+    
+    private updateResults() {
+      const resultsElement = document.getElementById('diagnostic-results');
+      if (resultsElement) {
+        resultsElement.innerHTML = this.results.join('<br>');
+      }
+      
+      console.log('📊 Final Diagnostic Results:', this.results);
+    }
+  }
+  
+  // Initialize diagnostics when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      console.log('🔍 DOM loaded, starting diagnostics...');
+      new ButtonDiagnostic();
+    });
+  } else {
+    console.log('🔍 DOM already loaded, starting diagnostics...');
+    new ButtonDiagnostic();
+  }
+</script>
+
+<style>
+  .button-test-container {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  button {
+    transition: all 0.2s ease;
+  }
+  
+  button:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  button:active {
+    transform: translateY(0);
+  }
+</style>
+

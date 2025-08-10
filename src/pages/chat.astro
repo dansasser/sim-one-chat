@@ -1,0 +1,45 @@
+---
+/**
+ * Chat Page - Main SIM-ONE Chat Interface
+ * 
+ * Provides the complete chat experience with authentication integration.
+ * Follows Law 5 (Protocolic Governance) for structured interaction.
+ */
+
+import AppLayout from '../layouts/AppLayout.astro';
+import ChatContainer from '../components/chat/ChatContainer.astro';
+
+// Check authentication status (simplified for demo)
+const isAuthenticated = Astro.url.searchParams.get('auth') === 'success';
+const userId = isAuthenticated ? 'demo-user-id' : undefined;
+const sessionId = isAuthenticated ? 'demo-session-id' : undefined;
+---
+
+<AppLayout 
+  title="SIM-ONE Chat Interface"
+  description="Experience the future of AI with SIM-ONE's revolutionary cognitive governance framework"
+  isAuthenticated={isAuthenticated}
+>
+  <main class="h-screen flex flex-col">
+    <ChatContainer 
+      isAuthenticated={isAuthenticated}
+      userId={userId}
+      sessionId={sessionId}
+    />
+  </main>
+</AppLayout>
+
+<style>
+  /* Ensure full height layout */
+  html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  main {
+    height: 100vh;
+    overflow: hidden;
+  }
+</style>
+

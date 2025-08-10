@@ -1,0 +1,334 @@
+---
+// Sidebar component for navigation and chat history
+// Supports both guest mode and authenticated mode
+export interface Props {
+  isAuthenticated?: boolean;
+  user?: {
+    name: string;
+    email: string;
+    plan: string;
+  };
+}
+
+const { isAuthenticated = false, user } = Astro.props;
+---
+
+<div class="sidebar h-full flex flex-col">
+  <!-- Sidebar Header -->
+  <div class="sidebar-header p-4 border-b border-gray-200 dark:border-gray-700">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center space-x-2">
+        <div class="w-8 h-8 bg-gradient-to-br from-green-500 to-teal-600 rounded-lg flex items-center justify-center">
+          <span class="text-white font-bold text-sm">S1</span>
+        </div>
+        <span class="font-semibold text-gray-900 dark:text-white">SIM-ONE</span>
+      </div>
+      
+      <!-- New Chat Button -->
+      <button 
+        class="new-chat-btn p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
+        title="New Chat"
+        aria-label="Start new chat"
+      >
+        <svg class="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+  
+  <!-- Chat History -->
+  <div class="chat-history flex-1 overflow-y-auto p-2">
+    {isAuthenticated ? (
+      <!-- Authenticated User - Show Chat History -->
+      <div class="space-y-1">
+        <!-- Recent Chats Section -->
+        <div class="mb-4">
+          <h3 class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider px-3 py-2">
+            Recent
+          </h3>
+          <div class="space-y-1">
+            <div id="chat-history-container">
+              <!-- Chat history items will be populated by React island -->
+              <div class="chat-item p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-colors">
+                <div class="text-sm text-gray-900 dark:text-white truncate">
+                  Welcome to SIM-ONE
+                </div>
+                <div class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                  Just now
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Previous Chats Section -->
+        <div class="mb-4">
+          <h3 class="text-xs font-medium text-gray-500 dark:text-gray-400 uppercase tracking-wider px-3 py-2">
+            Previous 7 Days
+          </h3>
+          <div class="space-y-1" id="previous-chats-container">
+            <!-- Previous chat items will be populated by React island -->
+          </div>
+        </div>
+      </div>
+    ) : (
+      <!-- Guest Mode - Show Sign Up Prompt -->
+      <div class="guest-mode-content p-4">
+        <div class="text-center mb-6">
+          <div class="w-12 h-12 bg-gray-100 dark:bg-gray-700 rounded-full flex items-center justify-center mx-auto mb-3">
+            <svg class="w-6 h-6 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path>
+            </svg>
+          </div>
+          <h3 class="text-sm font-medium text-gray-900 dark:text-white mb-2">
+            Chat History
+          </h3>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mb-4">
+            Sign up to save and revisit your conversations
+          </p>
+          <button class="signup-prompt-btn w-full px-4 py-2 bg-green-600 hover:bg-green-700 text-white text-sm font-medium rounded-lg transition-colors">
+            Sign up
+          </button>
+        </div>
+        
+        <!-- Guest Features Info -->
+        <div class="space-y-3">
+          <div class="flex items-start space-x-3">
+            <div class="w-2 h-2 bg-green-500 rounded-full mt-2 flex-shrink-0"></div>
+            <div>
+              <p class="text-xs text-gray-600 dark:text-gray-300">
+                <span class="font-medium">Free to use</span><br>
+                Start chatting immediately
+              </p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <div class="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></div>
+            <div>
+              <p class="text-xs text-gray-600 dark:text-gray-300">
+                <span class="font-medium">Full SIM-ONE access</span><br>
+                Experience all five agents
+              </p>
+            </div>
+          </div>
+          <div class="flex items-start space-x-3">
+            <div class="w-2 h-2 bg-purple-500 rounded-full mt-2 flex-shrink-0"></div>
+            <div>
+              <p class="text-xs text-gray-600 dark:text-gray-300">
+                <span class="font-medium">No registration required</span><br>
+                Privacy-focused design
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    )}
+  </div>
+  
+  <!-- Sidebar Footer -->
+  <div class="sidebar-footer border-t border-gray-200 dark:border-gray-700 p-4">
+    <div class="space-y-2">
+      {isAuthenticated ? (
+        <!-- Authenticated User Profile -->
+        <>
+          <div class="flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer transition-colors">
+            <div class="w-8 h-8 bg-gray-300 dark:bg-gray-600 rounded-full flex items-center justify-center">
+              <svg class="w-4 h-4 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path>
+              </svg>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="text-sm font-medium text-gray-900 dark:text-white truncate">
+                {user?.name || 'User'}
+              </div>
+              <div class="text-xs text-gray-500 dark:text-gray-400">
+                {user?.plan || 'Free Plan'}
+              </div>
+            </div>
+          </div>
+          
+          <!-- Settings Button -->
+          <button class="settings-btn w-full flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-left">
+            <svg class="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+            <span class="text-sm text-gray-700 dark:text-gray-300">Settings</span>
+          </button>
+          
+          <!-- Logout Button -->
+          <button class="logout-btn w-full flex items-center space-x-3 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-left">
+            <svg class="w-5 h-5 text-gray-600 dark:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
+            </svg>
+            <span class="text-sm text-gray-700 dark:text-gray-300">Logout</span>
+          </button>
+        </>
+      ) : (
+        <!-- Guest Mode - Login/Signup Options -->
+        <>
+          <button class="login-btn w-full flex items-center justify-center space-x-2 p-3 bg-green-600 hover:bg-green-700 text-white font-medium rounded-lg transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path>
+            </svg>
+            <span class="text-sm">Log in</span>
+          </button>
+          
+          <button class="signup-btn w-full flex items-center justify-center space-x-2 p-3 border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium rounded-lg transition-colors">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"></path>
+            </svg>
+            <span class="text-sm">Sign up</span>
+          </button>
+          
+          <!-- Continue as Guest -->
+          <div class="text-center pt-2">
+            <span class="text-xs text-gray-500 dark:text-gray-400">
+              or continue as guest
+            </span>
+          </div>
+        </>
+      )}
+    </div>
+  </div>
+</div>
+
+<style>
+  .sidebar {
+    background-color: var(--color-bg-sidebar);
+    color: var(--color-text-primary);
+  }
+  
+  .sidebar-header {
+    background-color: var(--color-bg-sidebar);
+    border-bottom-color: var(--color-border-primary);
+  }
+  
+  .sidebar-footer {
+    background-color: var(--color-bg-sidebar);
+    border-top-color: var(--color-border-primary);
+  }
+  
+  .chat-item {
+    transition: background-color var(--transition-fast);
+  }
+  
+  .chat-item:hover {
+    background-color: var(--color-bg-hover);
+  }
+  
+  .chat-item.active {
+    background-color: var(--color-accent-light);
+    border-left: 3px solid var(--color-accent-primary);
+  }
+  
+  .new-chat-btn,
+  .settings-btn,
+  .logout-btn {
+    transition: background-color var(--transition-fast);
+  }
+  
+  .new-chat-btn:hover,
+  .settings-btn:hover,
+  .logout-btn:hover {
+    background-color: var(--color-bg-hover);
+  }
+  
+  .new-chat-btn:focus,
+  .settings-btn:focus,
+  .logout-btn:focus {
+    outline: 2px solid var(--color-accent-primary);
+    outline-offset: 2px;
+  }
+  
+  /* Custom scrollbar */
+  .chat-history::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .chat-history::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .chat-history::-webkit-scrollbar-thumb {
+    background: var(--color-border-secondary);
+    border-radius: 3px;
+  }
+  
+  .chat-history::-webkit-scrollbar-thumb:hover {
+    background: var(--color-text-tertiary);
+  }
+  
+  /* High contrast mode adjustments */
+  [data-theme="high-contrast"] .chat-item.active {
+    border-left-width: 4px;
+    font-weight: 600;
+  }
+  
+  [data-theme="high-contrast"] .new-chat-btn:focus,
+  [data-theme="high-contrast"] .settings-btn:focus,
+  [data-theme="high-contrast"] .logout-btn:focus {
+    outline-width: 3px;
+  }
+</style>
+
+<script client:load>
+  // Sidebar interaction handlers
+  class SidebarInteractions {
+    constructor() {
+      this.init();
+    }
+    
+    private init() {
+      this.setupEventListeners();
+    }
+    
+    private setupEventListeners() {
+      // New chat button
+      const newChatBtn = document.querySelector('.new-chat-btn');
+      newChatBtn?.addEventListener('click', () => {
+        this.handleNewChat();
+      });
+      
+      // Settings button
+      const settingsBtn = document.querySelector('.settings-btn');
+      settingsBtn?.addEventListener('click', () => {
+        this.handleSettings();
+      });
+      
+      // Logout button
+      const logoutBtn = document.querySelector('.logout-btn');
+      logoutBtn?.addEventListener('click', () => {
+        this.handleLogout();
+      });
+      
+      // Chat item clicks will be handled by React island
+    }
+    
+    private handleNewChat() {
+      // Dispatch custom event for new chat
+      document.dispatchEvent(new CustomEvent('chat:new'));
+    }
+    
+    private handleSettings() {
+      // Dispatch custom event for settings modal
+      document.dispatchEvent(new CustomEvent('settings:open'));
+    }
+    
+    private handleLogout() {
+      // Dispatch custom event for logout
+      document.dispatchEvent(new CustomEvent('auth:logout'));
+    }
+  }
+  
+  // Initialize when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      new SidebarInteractions();
+    });
+  } else {
+    new SidebarInteractions();
+  }
+</script>
+

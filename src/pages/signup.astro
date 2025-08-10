@@ -1,0 +1,740 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// Check if user is already authenticated (this will be enhanced with actual auth later)
+const isAuthenticated = false; // TODO: Replace with actual auth check
+
+// If already authenticated, redirect to chat
+if (isAuthenticated) {
+  return Astro.redirect('/');
+}
+---
+
+<BaseLayout title="Sign up for SIM-ONE" description="Create your SIM-ONE account to save conversations and access advanced features">
+  <div class="auth-container min-h-screen flex items-center justify-center bg-gray-50 dark:bg-gray-900 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="auth-card max-w-md w-full space-y-8">
+      <!-- Header -->
+      <div class="text-center">
+        <div class="flex justify-center mb-6">
+          <div class="w-16 h-16 bg-gradient-to-br from-green-500 to-teal-600 rounded-2xl flex items-center justify-center">
+            <span class="text-white font-bold text-2xl">S1</span>
+          </div>
+        </div>
+        <h2 class="text-3xl font-bold text-gray-900 dark:text-white">
+          Create your account
+        </h2>
+        <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+          Join SIM-ONE and experience the future of AI
+        </p>
+      </div>
+
+      <!-- Signup Form -->
+      <form class="signup-form mt-8 space-y-6" action="/api/auth/signup" method="POST">
+        <div class="space-y-4">
+          <!-- Name Field -->
+          <div>
+            <label for="name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Full name
+            </label>
+            <input
+              id="name"
+              name="name"
+              type="text"
+              autocomplete="name"
+              required
+              class="auth-input w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:bg-gray-800 dark:text-white transition-colors"
+              placeholder="Enter your full name"
+            />
+            <div class="error-message hidden mt-2 text-sm text-red-600 dark:text-red-400" id="name-error"></div>
+          </div>
+
+          <!-- Email Field -->
+          <div>
+            <label for="email" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Email address
+            </label>
+            <input
+              id="email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              required
+              class="auth-input w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:bg-gray-800 dark:text-white transition-colors"
+              placeholder="Enter your email"
+            />
+            <div class="error-message hidden mt-2 text-sm text-red-600 dark:text-red-400" id="email-error"></div>
+          </div>
+
+          <!-- Password Field -->
+          <div>
+            <label for="password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Password
+            </label>
+            <div class="relative">
+              <input
+                id="password"
+                name="password"
+                type="password"
+                autocomplete="new-password"
+                required
+                class="auth-input w-full px-4 py-3 pr-12 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:bg-gray-800 dark:text-white transition-colors"
+                placeholder="Create a password"
+              />
+              <button
+                type="button"
+                class="password-toggle absolute inset-y-0 right-0 pr-3 flex items-center"
+                aria-label="Toggle password visibility"
+              >
+                <svg class="w-5 h-5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path class="eye-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                  <path class="eye-open" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                  <path class="eye-closed hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.878 9.878L3 3m6.878 6.878L21 21"></path>
+                </svg>
+              </button>
+            </div>
+            <div class="error-message hidden mt-2 text-sm text-red-600 dark:text-red-400" id="password-error"></div>
+            
+            <!-- Password Strength Indicator -->
+            <div class="password-strength mt-2 hidden">
+              <div class="flex items-center space-x-2">
+                <div class="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
+                  <div class="strength-bar h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+                </div>
+                <span class="strength-text text-xs text-gray-500 dark:text-gray-400">Weak</span>
+              </div>
+              <div class="strength-requirements mt-2 space-y-1 text-xs text-gray-500 dark:text-gray-400">
+                <div class="requirement" data-requirement="length">
+                  <span class="requirement-icon">✗</span> At least 8 characters
+                </div>
+                <div class="requirement" data-requirement="uppercase">
+                  <span class="requirement-icon">✗</span> One uppercase letter
+                </div>
+                <div class="requirement" data-requirement="lowercase">
+                  <span class="requirement-icon">✗</span> One lowercase letter
+                </div>
+                <div class="requirement" data-requirement="number">
+                  <span class="requirement-icon">✗</span> One number
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Confirm Password Field -->
+          <div>
+            <label for="confirm-password" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+              Confirm password
+            </label>
+            <input
+              id="confirm-password"
+              name="confirm-password"
+              type="password"
+              autocomplete="new-password"
+              required
+              class="auth-input w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 dark:bg-gray-800 dark:text-white transition-colors"
+              placeholder="Confirm your password"
+            />
+            <div class="error-message hidden mt-2 text-sm text-red-600 dark:text-red-400" id="confirm-password-error"></div>
+          </div>
+
+          <!-- Terms and Privacy -->
+          <div class="flex items-start">
+            <input
+              id="terms"
+              name="terms"
+              type="checkbox"
+              required
+              class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 dark:border-gray-600 rounded mt-1"
+            />
+            <label for="terms" class="ml-3 block text-sm text-gray-700 dark:text-gray-300">
+              I agree to the 
+              <a href="/terms" class="font-medium text-green-600 hover:text-green-500 dark:text-green-400 dark:hover:text-green-300 transition-colors">Terms of Service</a>
+              and 
+              <a href="/privacy" class="font-medium text-green-600 hover:text-green-500 dark:text-green-400 dark:hover:text-green-300 transition-colors">Privacy Policy</a>
+            </label>
+          </div>
+          <div class="error-message hidden mt-2 text-sm text-red-600 dark:text-red-400" id="terms-error"></div>
+
+          <!-- Marketing Emails (Optional) -->
+          <div class="flex items-start">
+            <input
+              id="marketing"
+              name="marketing"
+              type="checkbox"
+              class="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 dark:border-gray-600 rounded mt-1"
+            />
+            <label for="marketing" class="ml-3 block text-sm text-gray-700 dark:text-gray-300">
+              Send me updates about SIM-ONE features and improvements (optional)
+            </label>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div>
+          <button
+            type="submit"
+            class="signup-submit w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-green-600 hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+          >
+            <span class="submit-text">Create account</span>
+            <svg class="loading-spinner hidden animate-spin ml-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg>
+          </button>
+        </div>
+
+        <!-- Error Message -->
+        <div class="form-error hidden mt-4 p-4 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
+          <div class="flex">
+            <svg class="w-5 h-5 text-red-400 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+            <div class="ml-3">
+              <h3 class="text-sm font-medium text-red-800 dark:text-red-200">
+                Signup failed
+              </h3>
+              <p class="mt-1 text-sm text-red-700 dark:text-red-300" id="form-error-message">
+                Please check your information and try again.
+              </p>
+            </div>
+          </div>
+        </div>
+      </form>
+
+      <!-- Social Signup -->
+      <div class="mt-6">
+        <div class="relative">
+          <div class="absolute inset-0 flex items-center">
+            <div class="w-full border-t border-gray-300 dark:border-gray-600"></div>
+          </div>
+          <div class="relative flex justify-center text-sm">
+            <span class="px-2 bg-gray-50 dark:bg-gray-900 text-gray-500 dark:text-gray-400">Or sign up with</span>
+          </div>
+        </div>
+
+        <div class="mt-6 grid grid-cols-2 gap-3">
+          <button
+            type="button"
+            class="social-signup w-full inline-flex justify-center py-3 px-4 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm bg-white dark:bg-gray-800 text-sm font-medium text-gray-500 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+            data-provider="google"
+          >
+            <svg class="w-5 h-5" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="currentColor" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="currentColor" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+              <path fill="currentColor" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+            </svg>
+            <span class="ml-2">Google</span>
+          </button>
+
+          <button
+            type="button"
+            class="social-signup w-full inline-flex justify-center py-3 px-4 border border-gray-300 dark:border-gray-600 rounded-lg shadow-sm bg-white dark:bg-gray-800 text-sm font-medium text-gray-500 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+            data-provider="github"
+          >
+            <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+            </svg>
+            <span class="ml-2">GitHub</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Login Link -->
+      <div class="text-center">
+        <p class="text-sm text-gray-600 dark:text-gray-400">
+          Already have an account?
+          <a href="/login" class="font-medium text-green-600 hover:text-green-500 dark:text-green-400 dark:hover:text-green-300 transition-colors">
+            Log in
+          </a>
+        </p>
+      </div>
+
+      <!-- Guest Mode Link -->
+      <div class="text-center pt-4 border-t border-gray-200 dark:border-gray-700">
+        <a href="/" class="inline-flex items-center text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
+          <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path>
+          </svg>
+          Continue as guest
+        </a>
+      </div>
+    </div>
+  </div>
+</BaseLayout>
+
+<style>
+  .auth-container {
+    background-color: var(--color-bg-secondary);
+  }
+  
+  .auth-card {
+    background-color: var(--color-bg-primary);
+    padding: 2rem;
+    border-radius: var(--radius-xl);
+    box-shadow: var(--shadow-lg);
+    border: 1px solid var(--color-border-primary);
+  }
+  
+  .auth-input {
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+  }
+  
+  .auth-input:focus {
+    outline: none;
+    border-color: var(--color-accent-primary);
+    box-shadow: 0 0 0 3px rgba(16, 163, 127, 0.1);
+  }
+  
+  .auth-input.error {
+    border-color: var(--color-danger);
+  }
+  
+  .auth-input.error:focus {
+    box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+  }
+  
+  .signup-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+  
+  .social-signup:hover {
+    background-color: var(--color-bg-hover);
+  }
+  
+  .error-message {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  .password-strength {
+    animation: fadeIn 0.3s ease-in-out;
+  }
+  
+  .strength-bar {
+    transition: width 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  }
+  
+  .strength-bar.weak {
+    background-color: #ef4444;
+  }
+  
+  .strength-bar.fair {
+    background-color: #f59e0b;
+  }
+  
+  .strength-bar.good {
+    background-color: #10b981;
+  }
+  
+  .strength-bar.strong {
+    background-color: #059669;
+  }
+  
+  .requirement.met {
+    color: var(--color-success);
+  }
+  
+  .requirement.met .requirement-icon {
+    color: var(--color-success);
+  }
+  
+  .requirement.met .requirement-icon::before {
+    content: "✓";
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* High contrast mode adjustments */
+  [data-theme="high-contrast"] .auth-card {
+    border-width: 2px;
+  }
+  
+  [data-theme="high-contrast"] .auth-input:focus {
+    outline: 3px solid var(--color-accent-primary);
+    outline-offset: 2px;
+  }
+</style>
+
+<script>
+  // Signup form functionality
+  class SignupForm {
+    private form: HTMLFormElement;
+    private nameInput: HTMLInputElement;
+    private emailInput: HTMLInputElement;
+    private passwordInput: HTMLInputElement;
+    private confirmPasswordInput: HTMLInputElement;
+    private termsInput: HTMLInputElement;
+    private submitButton: HTMLButtonElement;
+    private passwordToggle: HTMLButtonElement;
+    
+    constructor() {
+      this.form = document.querySelector('.signup-form') as HTMLFormElement;
+      this.nameInput = document.getElementById('name') as HTMLInputElement;
+      this.emailInput = document.getElementById('email') as HTMLInputElement;
+      this.passwordInput = document.getElementById('password') as HTMLInputElement;
+      this.confirmPasswordInput = document.getElementById('confirm-password') as HTMLInputElement;
+      this.termsInput = document.getElementById('terms') as HTMLInputElement;
+      this.submitButton = document.querySelector('.signup-submit') as HTMLButtonElement;
+      this.passwordToggle = document.querySelector('.password-toggle') as HTMLButtonElement;
+      
+      this.init();
+    }
+    
+    private init() {
+      this.setupEventListeners();
+      this.setupValidation();
+    }
+    
+    private setupEventListeners() {
+      // Form submission
+      this.form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        this.handleSubmit();
+      });
+      
+      // Password toggle
+      this.passwordToggle.addEventListener('click', () => {
+        this.togglePasswordVisibility();
+      });
+      
+      // Real-time validation
+      this.nameInput.addEventListener('blur', () => {
+        this.validateName();
+      });
+      
+      this.emailInput.addEventListener('blur', () => {
+        this.validateEmail();
+      });
+      
+      this.passwordInput.addEventListener('input', () => {
+        this.updatePasswordStrength();
+        this.validatePassword();
+      });
+      
+      this.confirmPasswordInput.addEventListener('blur', () => {
+        this.validateConfirmPassword();
+      });
+      
+      this.termsInput.addEventListener('change', () => {
+        this.validateTerms();
+      });
+      
+      // Clear errors on input
+      [this.nameInput, this.emailInput, this.passwordInput, this.confirmPasswordInput].forEach(input => {
+        input.addEventListener('input', () => {
+          this.clearFieldError(input.id);
+        });
+      });
+      
+      // Social signup buttons
+      document.querySelectorAll('.social-signup').forEach(button => {
+        button.addEventListener('click', (e) => {
+          const provider = (e.currentTarget as HTMLElement).dataset.provider;
+          this.handleSocialSignup(provider!);
+        });
+      });
+    }
+    
+    private setupValidation() {
+      // Show password strength indicator when user starts typing
+      this.passwordInput.addEventListener('focus', () => {
+        const strengthIndicator = document.querySelector('.password-strength');
+        if (strengthIndicator) {
+          strengthIndicator.classList.remove('hidden');
+        }
+      });
+    }
+    
+    private async handleSubmit() {
+      // Clear previous errors
+      this.clearAllErrors();
+      
+      // Validate form
+      const isValid = this.validateForm();
+      if (!isValid) {
+        return;
+      }
+      
+      // Show loading state
+      this.setLoadingState(true);
+      
+      try {
+        const formData = new FormData(this.form);
+        const response = await fetch('/api/auth/signup', {
+          method: 'POST',
+          body: formData,
+        });
+        
+        const result = await response.json();
+        
+        if (response.ok) {
+          // Success - redirect to verification page or dashboard
+          window.location.href = result.redirectUrl || '/verify-email';
+        } else {
+          // Handle error
+          this.showFormError(result.message || 'Signup failed. Please try again.');
+        }
+      } catch (error) {
+        console.error('Signup error:', error);
+        this.showFormError('Network error. Please check your connection and try again.');
+      } finally {
+        this.setLoadingState(false);
+      }
+    }
+    
+    private validateForm(): boolean {
+      let isValid = true;
+      
+      // Validate all fields
+      if (!this.validateName()) isValid = false;
+      if (!this.validateEmail()) isValid = false;
+      if (!this.validatePassword()) isValid = false;
+      if (!this.validateConfirmPassword()) isValid = false;
+      if (!this.validateTerms()) isValid = false;
+      
+      return isValid;
+    }
+    
+    private validateName(): boolean {
+      const name = this.nameInput.value.trim();
+      
+      if (!name) {
+        this.showFieldError('name', 'Full name is required');
+        return false;
+      }
+      
+      if (name.length < 2) {
+        this.showFieldError('name', 'Name must be at least 2 characters');
+        return false;
+      }
+      
+      return true;
+    }
+    
+    private validateEmail(): boolean {
+      const email = this.emailInput.value.trim();
+      
+      if (!email) {
+        this.showFieldError('email', 'Email is required');
+        return false;
+      }
+      
+      if (!this.isValidEmail(email)) {
+        this.showFieldError('email', 'Please enter a valid email address');
+        return false;
+      }
+      
+      return true;
+    }
+    
+    private validatePassword(): boolean {
+      const password = this.passwordInput.value;
+      
+      if (!password) {
+        this.showFieldError('password', 'Password is required');
+        return false;
+      }
+      
+      const strength = this.calculatePasswordStrength(password);
+      if (strength < 2) {
+        this.showFieldError('password', 'Password is too weak. Please meet the requirements below.');
+        return false;
+      }
+      
+      return true;
+    }
+    
+    private validateConfirmPassword(): boolean {
+      const password = this.passwordInput.value;
+      const confirmPassword = this.confirmPasswordInput.value;
+      
+      if (!confirmPassword) {
+        this.showFieldError('confirm-password', 'Please confirm your password');
+        return false;
+      }
+      
+      if (password !== confirmPassword) {
+        this.showFieldError('confirm-password', 'Passwords do not match');
+        return false;
+      }
+      
+      return true;
+    }
+    
+    private validateTerms(): boolean {
+      if (!this.termsInput.checked) {
+        this.showFieldError('terms', 'You must agree to the Terms of Service and Privacy Policy');
+        return false;
+      }
+      
+      return true;
+    }
+    
+    private updatePasswordStrength() {
+      const password = this.passwordInput.value;
+      const strength = this.calculatePasswordStrength(password);
+      const strengthBar = document.querySelector('.strength-bar') as HTMLElement;
+      const strengthText = document.querySelector('.strength-text') as HTMLElement;
+      
+      if (!strengthBar || !strengthText) return;
+      
+      // Update strength bar
+      const widths = [0, 25, 50, 75, 100];
+      const colors = ['', 'weak', 'fair', 'good', 'strong'];
+      const texts = ['', 'Weak', 'Fair', 'Good', 'Strong'];
+      
+      strengthBar.style.width = `${widths[strength]}%`;
+      strengthBar.className = `strength-bar ${colors[strength]}`;
+      strengthText.textContent = texts[strength];
+      
+      // Update requirements
+      this.updatePasswordRequirements(password);
+    }
+    
+    private updatePasswordRequirements(password: string) {
+      const requirements = {
+        length: password.length >= 8,
+        uppercase: /[A-Z]/.test(password),
+        lowercase: /[a-z]/.test(password),
+        number: /\d/.test(password)
+      };
+      
+      Object.entries(requirements).forEach(([requirement, met]) => {
+        const element = document.querySelector(`[data-requirement="${requirement}"]`);
+        if (element) {
+          if (met) {
+            element.classList.add('met');
+            const icon = element.querySelector('.requirement-icon');
+            if (icon) icon.textContent = '✓';
+          } else {
+            element.classList.remove('met');
+            const icon = element.querySelector('.requirement-icon');
+            if (icon) icon.textContent = '✗';
+          }
+        }
+      });
+    }
+    
+    private calculatePasswordStrength(password: string): number {
+      let strength = 0;
+      
+      if (password.length >= 8) strength++;
+      if (/[A-Z]/.test(password)) strength++;
+      if (/[a-z]/.test(password)) strength++;
+      if (/\d/.test(password)) strength++;
+      if (/[^A-Za-z0-9]/.test(password)) strength++;
+      
+      return Math.min(strength, 4);
+    }
+    
+    private isValidEmail(email: string): boolean {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      return emailRegex.test(email);
+    }
+    
+    private showFieldError(fieldName: string, message: string) {
+      const input = document.getElementById(fieldName) as HTMLInputElement;
+      const errorElement = document.getElementById(`${fieldName}-error`);
+      
+      if (input && errorElement) {
+        input.classList.add('error');
+        errorElement.textContent = message;
+        errorElement.classList.remove('hidden');
+      }
+    }
+    
+    private clearFieldError(fieldName: string) {
+      const input = document.getElementById(fieldName) as HTMLInputElement;
+      const errorElement = document.getElementById(`${fieldName}-error`);
+      
+      if (input && errorElement) {
+        input.classList.remove('error');
+        errorElement.classList.add('hidden');
+      }
+    }
+    
+    private clearAllErrors() {
+      ['name', 'email', 'password', 'confirm-password', 'terms'].forEach(field => {
+        this.clearFieldError(field);
+      });
+      this.hideFormError();
+    }
+    
+    private showFormError(message: string) {
+      const errorElement = document.querySelector('.form-error');
+      const messageElement = document.getElementById('form-error-message');
+      
+      if (errorElement && messageElement) {
+        messageElement.textContent = message;
+        errorElement.classList.remove('hidden');
+      }
+    }
+    
+    private hideFormError() {
+      const errorElement = document.querySelector('.form-error');
+      if (errorElement) {
+        errorElement.classList.add('hidden');
+      }
+    }
+    
+    private setLoadingState(loading: boolean) {
+      const submitText = this.submitButton.querySelector('.submit-text');
+      const loadingSpinner = this.submitButton.querySelector('.loading-spinner');
+      
+      if (loading) {
+        this.submitButton.disabled = true;
+        submitText?.classList.add('hidden');
+        loadingSpinner?.classList.remove('hidden');
+      } else {
+        this.submitButton.disabled = false;
+        submitText?.classList.remove('hidden');
+        loadingSpinner?.classList.add('hidden');
+      }
+    }
+    
+    private togglePasswordVisibility() {
+      const isPassword = this.passwordInput.type === 'password';
+      this.passwordInput.type = isPassword ? 'text' : 'password';
+      
+      const eyeOpen = this.passwordToggle.querySelectorAll('.eye-open');
+      const eyeClosed = this.passwordToggle.querySelectorAll('.eye-closed');
+      
+      if (isPassword) {
+        eyeOpen.forEach(el => el.classList.add('hidden'));
+        eyeClosed.forEach(el => el.classList.remove('hidden'));
+      } else {
+        eyeOpen.forEach(el => el.classList.remove('hidden'));
+        eyeClosed.forEach(el => el.classList.add('hidden'));
+      }
+    }
+    
+    private async handleSocialSignup(provider: string) {
+      try {
+        // Redirect to social signup endpoint
+        window.location.href = `/api/auth/${provider}`;
+      } catch (error) {
+        console.error(`${provider} signup error:`, error);
+        this.showFormError(`Failed to connect with ${provider}. Please try again.`);
+      }
+    }
+  }
+  
+  // Initialize signup form when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => {
+      new SignupForm();
+    });
+  } else {
+    new SignupForm();
+  }
+</script>
+
